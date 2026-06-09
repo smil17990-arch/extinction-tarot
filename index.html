@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLACK MASS EXTINCTION TAROT | 絶滅という名の聖典</title>
+<meta property="og:title" content="BLACK MASS EXTINCTION TAROT | 絶滅という名の聖典">
+<meta property="og:description" content="恐竜を神話として描いたら、どうなるか。絶滅を宇宙的事象として描いたら、どうなるか。全22枚の大アルカナ。">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --black:#000000;
+  --near-black:#060404;
+  --magenta:#ff0066;
+  --magenta-dim:#880033;
+  --magenta-glow:#ff006644;
+  --acid:#39ff14;
+  --acid-dim:#1a7a08;
+  --acid-glow:#39ff1433;
+  --text:#cc0044;
+  --text-dim:#440011;
+  --border:#220008;
+}
+body{
+  background:var(--black);
+  min-height:100vh;
+  color:var(--text);
+  font-family:'Shippori Mincho',serif;
+  overflow-x:hidden;
+}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:#000}
+::-webkit-scrollbar-thumb{background:#220008}
+
+canvas#bg{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+
+#app{position:relative;z-index:1;}
+
+/* ヘッダー */
+header{
+  text-align:center;
+  padding:40px 16px 0;
+  border-bottom:1px solid #1a0008;
+  position:relative;overflow:hidden;
+}
+header::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--magenta),var(--acid),transparent);
+  animation:scan 6s linear infinite;
+}
+@keyframes scan{0%{opacity:.2}50%{opacity:1}100%{opacity:.2}}
+
+.h-top{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:8px;
+  color:var(--text-dim);margin-bottom:10px;
+}
+.h-title-main{
+  font-family:'Cinzel',serif;font-weight:700;
+  font-size:clamp(14px,4vw,22px);
+  color:var(--magenta);letter-spacing:4px;
+  text-shadow:0 0 30px var(--magenta-glow),0 0 60px var(--magenta-glow);
+  margin-bottom:4px;
+  animation:flicker 8s infinite;
+}
+@keyframes flicker{0%,95%,100%{opacity:1}96%{opacity:.8}97%{opacity:1}98%{opacity:.6}99%{opacity:1}}
+.h-title-sub{
+  font-family:'Shippori Mincho',serif;font-size:12px;
+  color:var(--acid-dim);letter-spacing:4px;margin-bottom:6px;
+}
+.h-en{
+  font-family:'Cinzel',serif;font-size:8px;color:#1a0008;
+  letter-spacing:5px;margin-bottom:22px;
+}
+nav{display:flex;justify-content:center;}
+.nav-btn{
+  font-family:'Shippori Mincho',serif;font-size:12px;letter-spacing:1px;
+  color:var(--text-dim);background:transparent;border:none;
+  border-bottom:1px solid transparent;
+  padding:8px 18px;cursor:pointer;transition:all .25s;
+}
+.nav-btn:hover{color:var(--magenta);}
+.nav-btn.active{color:var(--magenta);border-bottom:1px solid var(--magenta);}
+
+main{max-width:920px;margin:0 auto;padding:28px 16px;}
+
+/* ======== HOME ======== */
+#page-home{text-align:center;padding:48px 0;display:none;}
+#page-home.show{display:block;}
+.home-hero{width:190px;margin:0 auto 36px;position:relative;}
+.home-hero img{
+  width:100%;border-radius:2px;
+  box-shadow:0 0 60px var(--magenta-glow),0 20px 60px #00000099;
+  filter:brightness(.95) contrast(1.1) saturate(1.2);
+}
+.home-hero::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(transparent 50%,var(--black));
+  border-radius:2px;
+}
+.home-rule{
+  background:#080004;border:1px solid #1a0008;
+  border-left:2px solid var(--magenta);
+  padding:20px 24px;max-width:440px;margin:0 auto 32px;
+  text-align:left;
+}
+.home-rule-title{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;
+  color:var(--magenta);margin-bottom:12px;
+}
+.home-rule-text{
+  font-size:13px;color:#660022;line-height:2.4;letter-spacing:.5px;
+}
+.home-rule-text em{color:var(--acid-dim);font-style:normal;}
+.home-colors{
+  display:flex;gap:12px;justify-content:center;margin-bottom:32px;
+}
+.color-chip{
+  width:48px;height:48px;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:7px;letter-spacing:1px;
+  border:1px solid #1a0008;
+}
+.home-credit{
+  border-top:1px solid #1a0008;border-bottom:1px solid #1a0008;
+  padding:18px 0;margin-bottom:28px;
+}
+.home-credit-label{
+  font-family:'Cinzel',serif;font-size:8px;color:#1a0008;
+  letter-spacing:4px;margin-bottom:10px;
+}
+.home-credit-text{font-size:11px;color:#330010;line-height:2.4;}
+.home-btn{
+  font-family:'Cinzel',serif;font-size:12px;letter-spacing:5px;
+  color:var(--black);
+  background:var(--magenta);
+  border:none;border-radius:1px;
+  padding:14px 52px;cursor:pointer;
+  box-shadow:0 0 30px var(--magenta-glow);transition:all .3s;
+}
+.home-btn:hover{
+  box-shadow:0 0 60px var(--magenta-glow),0 0 120px var(--magenta-glow);
+  transform:translateY(-2px);
+}
+
+/* ======== ORACLE ======== */
+#page-oracle{text-align:center;display:none;}
+#page-oracle.show{display:block;}
+.oracle-lead{
+  font-family:'Cinzel',serif;font-size:10px;color:var(--text-dim);
+  margin-bottom:36px;letter-spacing:5px;
+}
+.card-back{
+  width:190px;height:266px;margin:0 auto 36px;
+  background:#040002;
+  border:1px solid #1a0008;border-radius:3px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 0 40px #00000099,0 0 20px var(--magenta-glow);
+  cursor:pointer;transition:all .35s;position:relative;overflow:hidden;
+}
+.card-back::before{
+  content:'';position:absolute;inset:8px;
+  border:1px solid #1a0008;border-radius:1px;
+}
+/* スキャンライン */
+.card-back::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,#ff006606 3px,#ff006606 4px);
+  pointer-events:none;
+}
+.card-back:hover{
+  box-shadow:0 0 60px #00000099,0 0 40px var(--magenta-glow);
+  transform:translateY(-4px);
+  border-color:var(--magenta-dim);
+}
+.cb-icon{
+  font-family:'Cinzel',serif;font-size:28px;
+  color:var(--magenta-dim);z-index:1;
+  text-shadow:0 0 20px var(--magenta-glow);
+}
+.cb-label{
+  font-family:'Cinzel',serif;font-size:10px;
+  color:var(--magenta-dim);letter-spacing:5px;z-index:1;
+}
+.cb-label.drawing{color:var(--magenta);animation:blink .5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.cb-sub{font-family:'Cinzel',serif;font-size:8px;color:#1a0008;letter-spacing:2px;z-index:1;}
+
+/* 履歴 */
+.history-wrap{max-width:420px;margin:0 auto;}
+.history-label{font-family:'Cinzel',serif;font-size:8px;color:#1a0008;letter-spacing:5px;margin-bottom:12px;text-align:center;}
+.history-item{
+  display:flex;align-items:center;gap:12px;
+  padding:8px 12px;border:1px solid #0e0004;border-radius:1px;
+  margin-bottom:6px;cursor:pointer;transition:all .2s;
+}
+.history-item:hover{border-color:var(--magenta-dim);background:#08000488;}
+.history-item.latest{background:#0a000488;border-color:var(--magenta-dim);}
+.h-thumb{width:34px;height:48px;object-fit:cover;border-radius:1px;opacity:.85;filter:contrast(1.1);}
+.h-thumb.rev{transform:rotate(180deg);}
+.h-name{font-size:13px;color:#880033;}
+.h-pos{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;}
+.h-pos.up{color:var(--acid-dim);}
+.h-pos.rv{color:#880033;}
+.h-time{margin-left:auto;font-family:'Cinzel',serif;font-size:8px;color:#1a0008;}
+
+/* ======== GALLERY ======== */
+#page-gallery{display:none;}
+#page-gallery.show{display:block;}
+.gallery-lead{font-size:11px;color:#1a0008;text-align:center;margin-bottom:20px;letter-spacing:4px;font-family:'Cinzel',serif;}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(112px,1fr));
+  gap:8px;
+}
+.g-card{
+  cursor:pointer;border:1px solid #0e0004;border-radius:2px;
+  overflow:hidden;background:#040002;
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+}
+.g-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 30px #00000088,0 0 20px var(--magenta-glow);
+  border-color:var(--magenta-dim);
+}
+.g-img{position:relative;padding-top:140%;background:#020001;}
+.g-img img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:.88;filter:contrast(1.05) saturate(1.1);
+}
+.g-img-ov{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,#040002ee);
+  padding:20px 8px 5px;
+}
+.g-roman{font-family:'Cinzel',serif;font-size:8px;color:var(--magenta-dim);letter-spacing:2px;}
+.g-text{padding:5px 7px 7px;text-align:center;}
+.g-name{font-size:11px;color:#880033;letter-spacing:1px;}
+.g-en{font-family:'Cinzel',serif;font-size:7px;color:#1a0008;margin-top:2px;letter-spacing:1px;}
+
+/* ======== MODAL ======== */
+#modal-ov{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.96);
+  display:none;align-items:center;justify-content:center;
+  padding:16px;backdrop-filter:blur(8px);
+}
+#modal-ov.show{display:flex;}
+#modal-box{
+  width:100%;max-width:500px;
+  background:#030001;
+  border:1px solid #1a0008;border-radius:2px;
+  box-shadow:0 0 80px var(--magenta-glow),inset 0 0 60px #00000066;
+  max-height:92vh;overflow-y:auto;
+  padding:0 0 28px;
+  animation:modal-in .3s cubic-bezier(.2,0,.2,1);
+}
+@keyframes modal-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* スキャンライン */
+#modal-box::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:300;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,#ff006604 3px,#ff006604 4px);
+}
+.modal-img-wrap{position:relative;width:100%;padding-top:133%;overflow:hidden;}
+.modal-img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:brightness(.9) contrast(1.1) saturate(1.1);
+  transform:scaleX(0);transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.modal-img.show{transform:scaleX(1);}
+.modal-img.rev{transform:scaleX(1) rotate(180deg);}
+.modal-img-ov{
+  position:absolute;bottom:0;left:0;right:0;height:50%;
+  background:linear-gradient(transparent,#030001);
+}
+.modal-roman{
+  position:absolute;top:14px;left:0;right:0;text-align:center;
+  font-family:'Cinzel',serif;font-size:14px;
+  color:var(--magenta);letter-spacing:6px;
+  text-shadow:0 0 20px var(--magenta-glow);
+}
+.modal-rev-badge{
+  position:absolute;top:14px;right:14px;
+  background:#060002cc;border:1px solid var(--magenta-dim);border-radius:1px;
+  padding:3px 10px;
+  font-family:'Cinzel',serif;font-size:9px;color:var(--magenta);letter-spacing:2px;
+}
+.modal-body{padding:22px 26px 0;}
+.modal-name-wrap{text-align:center;margin-bottom:16px;}
+.modal-creature{
+  font-family:'Cinzel',serif;font-size:10px;color:var(--magenta);
+  letter-spacing:3px;margin-bottom:6px;
+  text-shadow:0 0 10px var(--magenta-glow);
+}
+.modal-name-ja{font-size:13px;color:#550018;letter-spacing:2px;margin-bottom:4px;}
+.modal-name-en{font-family:'Cinzel',serif;font-size:10px;color:#220008;letter-spacing:4px;}
+.modal-div{border-top:1px solid #0e0004;margin-bottom:18px;}
+.modal-desc{
+  font-size:13px;line-height:2.3;color:#550018;
+  white-space:pre-wrap;min-height:60px;
+}
+.cursor{animation:blink .7s infinite;}
+
+/* ラテン語銘 */
+.modal-latin{
+  margin-top:18px;padding:14px 18px;
+  background:#060002;
+  border-left:2px solid var(--acid-dim);
+  display:none;
+}
+.modal-latin.show{display:block;}
+.latin-text{
+  font-family:'Cinzel',serif;font-size:12px;
+  color:var(--acid-dim);letter-spacing:2px;line-height:1.8;
+  font-style:italic;
+}
+.latin-jp{
+  font-size:11px;color:#1a0008;margin-top:6px;letter-spacing:1px;line-height:1.8;
+}
+
+/* オラクル */
+.modal-oracle{
+  margin-top:14px;padding:14px 16px;border-radius:2px;display:none;
+}
+.modal-oracle.show{display:block;}
+.modal-oracle.up{background:#020800;border:1px solid #0a2008;}
+.modal-oracle.rv{background:#060002;border:1px solid #1a0008;}
+.modal-o-label{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;margin-bottom:8px;
+}
+.modal-oracle.up .modal-o-label{color:var(--acid-dim);}
+.modal-oracle.rv .modal-o-label{color:var(--magenta-dim);}
+.modal-o-text{font-size:14px;line-height:1.9;letter-spacing:1px;}
+.modal-oracle.up .modal-o-text{color:var(--acid-dim);}
+.modal-oracle.rv .modal-o-text{color:var(--magenta);}
+
+.modal-close{
+  display:block;width:calc(100% - 52px);margin:24px auto 0;
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;
+  color:#1a0008;background:transparent;
+  border:1px solid #0e0004;border-radius:1px;padding:11px;
+  cursor:pointer;transition:all .2s;
+}
+.modal-close:hover{border-color:var(--magenta-dim);color:var(--magenta-dim);}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="app">
+  <header>
+    <div class="h-top">EXTINCTIO · ANNO K-PG · 66,000,000 BP</div>
+    <div class="h-title-main">BLACK MASS EXTINCTION TAROT</div>
+    <div class="h-title-sub">絶滅という名の聖典</div>
+    <div class="h-en">ALL 22 MAJOR ARCANA</div>
+    <nav>
+      <button class="nav-btn active" data-page="home">▸ はじめに</button>
+      <button class="nav-btn" data-page="oracle">▸ 絶滅に問う</button>
+      <button class="nav-btn" data-page="gallery">▸ 全22枚</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <div id="page-home" class="show">
+      <div class="home-hero">
+        <img src="https://assets.st-note.com/img/1779941494-CaxWnrQZhj05Y8R7VLwNzoPD.png" alt="世界">
+      </div>
+      <div class="home-rule">
+        <div class="home-rule-title">RULES OF THIS DECK</div>
+        <div class="home-rule-text">
+          このタロットには三つの色しかない。<br><br>
+          <em>ホットマゼンタ。</em><br>
+          <em>毒々しい酸グリーン。</em><br>
+          純粋な黒。<br><br>
+          そして一つの感情的ルールがある。<br><br>
+          「絶滅を直接描かない」<br><br>
+          代わりに描くのは、<br>
+          まだ誰も知らない時間。<br>
+          でも宇宙はすでに知っている時間。<br>
+          その隙間だけを、21枚に刻んだ。
+        </div>
+      </div>
+      <div class="home-colors">
+        <div class="color-chip" style="background:#ff0066;color:#000;">MAGENTA</div>
+        <div class="color-chip" style="background:#39ff14;color:#000;">ACID</div>
+        <div class="color-chip" style="background:#0a0004;color:#220008;border-color:#1a0008;">BLACK</div>
+      </div>
+      <div class="home-credit">
+        <div class="home-credit-label">CREDIT</div>
+        <div class="home-credit-text">
+          テキスト：Claude（Anthropic）<br>
+          画像生成：ChatGPT（DALL-E）<br>
+          編集・発行：無限納豆
+        </div>
+      </div>
+      <button class="home-btn" id="btn-start">ENTER THE ABYSS</button>
+    </div>
+
+    <!-- ORACLE -->
+    <div id="page-oracle">
+      <div class="oracle-lead">FATUM INQUIRE · 絶滅に問いかけよ</div>
+      <div class="card-back" id="draw-btn">
+        <div class="cb-icon">☽</div>
+        <div class="cb-label" id="draw-label">DRAW</div>
+        <div class="cb-sub">タップで引く</div>
+      </div>
+      <div id="history-section" style="display:none;">
+        <div class="history-wrap">
+          <div class="history-label">HISTORY</div>
+          <div id="history-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div id="page-gallery">
+      <div class="gallery-lead">OMNES ARCANA · 大アルカナ 全22枚</div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div id="modal-ov">
+  <div id="modal-box">
+    <div class="modal-img-wrap">
+      <img class="modal-img" id="m-img" src="" alt="">
+      <div class="modal-img-ov"></div>
+      <div class="modal-roman" id="m-roman"></div>
+      <div class="modal-rev-badge" id="m-rev-badge" style="display:none;">逆位置</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-name-wrap">
+        <div class="modal-creature" id="m-creature"></div>
+        <div class="modal-name-ja" id="m-name-ja"></div>
+        <div class="modal-name-en" id="m-name-en"></div>
+      </div>
+      <div class="modal-div"></div>
+      <div class="modal-desc" id="m-desc"></div>
+      <div class="modal-latin" id="m-latin">
+        <div class="latin-text" id="m-latin-text"></div>
+        <div class="latin-jp" id="m-latin-jp"></div>
+      </div>
+      <div class="modal-oracle" id="m-oracle">
+        <div class="modal-o-label" id="m-o-label"></div>
+        <div class="modal-o-text" id="m-o-text"></div>
+      </div>
+      <button class="modal-close" id="m-close">── CLOSE ──</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CARDS = [
+  {id:0,name:"愚者",nameEn:"THE FOOL",roman:"0",
+   creature:"VELOCIRAPTOR",
+   image:"https://assets.st-note.com/img/1779934743-G6L09N5zKTvsMepkqcIOXbSx.png",
+   desc:"岩の上に立ち、上を見ている。\n\n首には鍵と、小さなお守り。足元には割れた卵と、髑髏。\n\n隕石は来る。でもまだ来ていない。だから今は、ただ空を見ている。\n\nこれがすべての始まりだ。知らないことが、最初の一歩になる。",
+   latin:"NESCIT — ET AMBULAT",latinJp:"知らない——そして歩く。",
+   upright:"まだ何も決まっていない。それが最大の自由だ。",
+   reversed:"空を見上げたまま、一歩が出ていない。"},
+  {id:1,name:"魔術師",nameEn:"THE MAGICIAN",roman:"Ⅰ",
+   creature:"PTERANODON",
+   image:"https://assets.st-note.com/img/1779934822-pMB8lIxDQPsftUHJ3GOzmKVr.png",
+   desc:"翼を広げ、一方を空へ、一方を深淵へ。\n\n「上にあるごとく、下にあり」——錬金術の根本命題を、翼そのもので体現する。首には錬金術の三元素が連なる。硫黄、水銀、塩。\n\nこれは魔法ではない。消える直前、すべての知性が行う最後の儀式だ。",
+   latin:"FIAT LUX — ET FACTA EST EXTINCTIO",latinJp:"光あれ——そして絶滅があった。",
+   upright:"すでに道具はある。あとは意志だけだ。",
+   reversed:"儀式を始める前に、止まっている。"},
+  {id:2,name:"女教皇",nameEn:"THE HIGH PRIESTESS",roman:"Ⅱ",
+   creature:"MOSASAURUS",
+   image:"https://assets.st-note.com/img/1779934895-IEOneo9kMy0F6s41tc3fmGWU.png",
+   desc:"深海から垂直に浮上する。目は閉じている。狩りをしているのではない。\n\n頭上には三日月冠。両脇には楔形文字の刻まれた柱。足元には水面に漂う巻物——その文字は、水に溶けている。\n\n海は図書館だった。この生き物は、その最後の司書だ。",
+   latin:"ABYSSUS ABYSSUM INVOCAT",latinJp:"深淵は深淵を呼ぶ。",
+   upright:"答えはすでにある。静かに受け取れ。",
+   reversed:"知っていて、語らない。"},
+  {id:3,name:"女帝",nameEn:"THE EMPRESS",roman:"Ⅲ",
+   creature:"BRACHIOSAURUS",
+   image:"https://assets.st-note.com/img/1779939745-wGvxr2uQok1LYFCgzZ3fUmH8.png",
+   desc:"首が、緩やかに左へ曲がる。枯れかけた木のように。攻撃でも、採食でもない。ただ、耐えている。\n\n足元には割れた卵。ひとつだけ、内側から淡く緑に光る卵がある。その光が、このカードで唯一の温もりだ。\n\n地球上を歩いた最大の生き物が、宇宙の虚空の前で、小さく見える。",
+   latin:"FECUNDA TERRA MORITUR",latinJp:"肥沃な大地は、死ぬ。",
+   upright:"豊かさはすでにここにある。",
+   reversed:"与えることを恐れている。"},
+  {id:4,name:"皇帝",nameEn:"THE EMPEROR",roman:"Ⅳ",
+   creature:"TRICERATOPS",
+   image:"https://assets.st-note.com/img/1779939823-pLdyehEKFg6s0kB3tUxWnjaH.png",
+   desc:"正面を向いている。動かない。\n\nフリルには錬金術のグリフが刻まれている。三本の角は、三本の剣だ。体そのものが、城壁だ。\n\nこの生き物は玉座に座っているのではない。自分が玉座なのだ。\n\n左に骨。右に落ちた王冠。それだけが、王国がもう終わっていることを語る。",
+   latin:"IMPERIUM TRANSIT — SAXUM MANET",latinJp:"帝国は過ぎ去る。石は残る。",
+   upright:"秩序を作れ。あなたがその中心だ。",
+   reversed:"玉座に座ったまま、王国が消えている。"},
+  {id:5,name:"法皇",nameEn:"THE HIEROPHANT",roman:"Ⅴ",
+   creature:"ANKYLOSAURUS",
+   image:"https://assets.st-note.com/img/1779939914-I5mXDvxeTN7UCogEpQ3R4rP2.png",
+   desc:"横向きに、待っている。ずっと待っている。\n\n甲羅の各プレートには、異なる錬金術シンボルが刻まれている。生きた石碑。歩く法典。\n\n尾のクラブは地面に置かれている。振り上げていない。もう、振り上げる必要がなくなって、久しい。\n\n伝統は、最後の信者が去った後も続いていた。",
+   latin:"LEX AETERNA — NEMO MEMINIT",latinJp:"永遠の法——誰も覚えていない。",
+   upright:"伝統の中に道がある。",
+   reversed:"形だけが残り、意味が抜けている。"},
+  {id:6,name:"恋人",nameEn:"THE LOVERS",roman:"Ⅵ",
+   creature:"IGUANODON",
+   image:"https://assets.st-note.com/img/1779939998-KJQdbLN2uMcOhlRBs4nDofPt.png",
+   desc:"二頭が向かい合っている。触れていない。届かない。\n\nその間を、緑の隕石が通過する。二頭は見ていない。お互いだけを見ている。\n\n足元には、ひとつの割れた卵。宇宙は証人として、ただそこにいる。介入しない。悼まない。慈悲もない。",
+   latin:"AMOR VINCIT — SED NON MORTEM",latinJp:"愛は勝つ——ただし、死には勝てない。",
+   upright:"選ぶことが、始まりだ。",
+   reversed:"触れられずに、向かい合っている。"},
+  {id:7,name:"戦車",nameEn:"THE CHARIOT",roman:"Ⅶ",
+   creature:"PACHYCEPHALOSAURUS",
+   image:"https://assets.st-note.com/img/1779940045-4cLm6fMIghA7TPZaKybz9Bpw.png",
+   desc:"正面から突進してくる。頭蓋のドームに、緑の征服のシジルが刻まれている。\n\n背後の地面には放射状の亀裂。破壊は後ろにある。前にはない。\n\n足元には、半分埋もれた古い車輪。生き物が、車輪そのものになった。\n\n目的地が消えた後も、疾走は続く。それが最も孤独な勝利だ。",
+   latin:"CURRUS SINE VIA — VIS SINE FINE",latinJp:"道なき戦車——終わりなき力。",
+   upright:"今は走れ。考えるのは後でいい。",
+   reversed:"速さだけが先行し、方向を見失っている。"},
+  {id:8,name:"力",nameEn:"STRENGTH",roman:"Ⅷ",
+   creature:"TYRANNOSAURUS REX",
+   image:"https://assets.st-note.com/img/1779940117-ultZUAjiBnxeYLJfHE0GKcpV.png",
+   desc:"横向きに、静止している。生涯で初めて、静止している。\n\n首の付け根に、茨の冠。足元は灰。右下には、かつての獲物の顎骨——捕食者が無意味になった証拠が、足元に埋もれている。\n\n小さな腕が、少し前に出ている。祈りに近い。でも祈りではない。\n\n太陽は小さく、高く、遠い。すでに遠ざかりつつある。",
+   latin:"FORTISSIMUS — ET PRIMUS CADIT",latinJp:"最強——そして最初に倒れる。",
+   upright:"力は静けさの中にある。",
+   reversed:"頂点にいるが、灰が見えていない。"},
+  {id:9,name:"隠者",nameEn:"THE HERMIT",roman:"Ⅸ",
+   creature:"EDMONTOSAURUS",
+   image:"https://assets.st-note.com/img/1779940460-Spq3O8LUAYmCg0ftFo5knWR4.png",
+   desc:"岩の上に立っている。岩は宙に浮いている。世界の下はすでに消えた。\n\n前足に、一本の骨。骨は内側から緑に光っている。化石の光。記憶の光。\n\n右上に、ひとつの星。最後の星か、最初の隕石か。\n\n誰も見ていない。でも見ている。それだけで、十分だった。",
+   latin:"SOLUS VIDET — SOLUS MORITUR",latinJp:"ひとりで見る——ひとりで死ぬ。",
+   upright:"自分の光で照らせる範囲を歩け。",
+   reversed:"光を消して、立ち止まっている。"},
+  {id:10,name:"運命の輪",nameEn:"WHEEL OF FORTUNE",roman:"Ⅹ",
+   creature:"AMMONITE",
+   image:"https://assets.st-note.com/img/1779940521-0Dt8iRlgvVdu2OBIT7ZFaC4Q.png",
+   desc:"このカードだけ、恐竜がいない。\n\nアンモナイトの螺旋が、輪そのものだ。各チャンバーには、それぞれの時代が刻まれている。外側から内側へ：灰、哺乳類、恐竜、古生代の生物、そして中心——純粋な緑の虚空。\n\n上には、複数の化石骨格で組み上げられたスフィンクス。緑の目だけが生きている。\n\n左で蛇が降り、右で蛇が昇る。同じ蛇だ。",
+   latin:"ROTA GIRAT — NEMO REDIT",latinJp:"輪は回る——誰も戻らない。",
+   upright:"流れに乗れ。今は上昇の番だ。",
+   reversed:"輪に飲まれ、回されている。"},
+  {id:11,name:"正義",nameEn:"JUSTICE",roman:"Ⅺ",
+   creature:"STEGOSAURUS",
+   image:"https://assets.st-note.com/img/1779940582-pStOdk8hyGW9ugwMIf2RnNoT.png",
+   desc:"横向きに、動かない。ジュラ紀からずっと、ここに立っている。\n\n背板は天秤になっている。各プレートから鎖が垂れ、実際の皿がぶら下がっている。それぞれに、錬金術の計量シンボルが刻まれている。\n\n口から、緑の炎が一滴。判決の配達。\n\n地面を、水平な亀裂が走る。左：生きたシダ。右：灰。この一本の線が、前と後の境界だ。",
+   latin:"AEQUUM EST — ERGO TRANSIT",latinJp:"均衡している——ゆえに過ぎ去る。",
+   upright:"正直に向き合え。答えはすでに出ている。",
+   reversed:"天秤が傾いたまま、目を逸らしている。"},
+  {id:12,name:"吊られた男",nameEn:"THE HANGED MAN",roman:"Ⅻ",
+   creature:"ELASMOSAURUS",
+   image:"https://assets.st-note.com/img/1779940651-TFa2SRjDg8WUqVzmcJXEfQNr.png",
+   desc:"首が、ゆっくりとS字を描いて垂れ下がる。上の枯れた珊瑚の根に、海百合の花輪が巻かれた後足が引っかかっている。\n\n鎖ではなく、花。これは選んだことだ。\n\n頭部から、緑の粒子が散る。最後の呼気が、光になる。\n\nこの生き物と虚空は、ある了解に達した。",
+   latin:"PENDET — ET VIDET QUOD ALII NON VIDENT",latinJp:"吊るされている——そして他の者には見えないものを見る。",
+   upright:"今は動かないことが正解だ。",
+   reversed:"吊るされたまま、気づこうとしていない。"},
+  {id:13,name:"死神",nameEn:"DEATH",roman:"ⅩⅢ",
+   creature:"SPINOSAURUS",
+   image:"https://assets.st-note.com/img/1779940721-sB4QqFM1HNtJWjPnOwprLdUm.png",
+   desc:"川がない。でもスピノサウルスは、川があった場所に立っている。\n\n頭を、魚がいた方向に傾けている。乾いた川底のひびわれが、魚の骨格の輪郭を形成している。川の記憶が、大地に刻まれている。\n\nセイルの隙間から、宇宙が透けて見える。\n\n足元に、一輪の緑の蓮。乾いた地面に咲いている。",
+   latin:"NONDUM SCIT — IAM TRANSIIT",latinJp:"まだ知らない——すでに通過した。",
+   upright:"終わりは変容だ。恐れるな。",
+   reversed:"変わることを拒み、川のない場所に立ち続けている。"},
+  {id:14,name:"節制",nameEn:"TEMPERANCE",roman:"ⅩⅣ",
+   creature:"OVIRAPTOR",
+   image:"https://assets.st-note.com/img/1779940833-5Gx1vKNg6V3QtrUmi8HnhO94.png",
+   desc:"羽毛を持つ、最も鳥に近い恐竜。巣の上で、翼を広げている。\n\n両前足に、くり抜かれた骨の器。高い方から低い方へ、細い緑の液体が流れている。それは水ではない。時間だ。\n\n器の下には卵。いくつかは孵化した。いくつかはしなかった。いくつかは、しない。\n\nオヴィラプトルは区別しない。全てを等しく、温める。",
+   latin:"LENTE — SED MUTAT",latinJp:"ゆっくりと——しかし変わる。",
+   upright:"バランスは動きの中にある。",
+   reversed:"どちらかに注ぎすぎている。"},
+  {id:15,name:"悪魔",nameEn:"THE DEVIL",roman:"ⅩⅤ",
+   creature:"DIMETRODON",
+   image:"https://assets.st-note.com/img/1779940925-rhczyo0Hqf9ZaJOD8kxQitgd.png",
+   desc:"恐竜より古い。恐竜が経験しなかった大量絶滅を、すでに生き延びた。\n\n正面を向き、玉座の岩に座っている。両目が緑——このデッキで唯一。全てを見る。それが問題だ。\n\n背びれの各パネルに、自分より先に絶滅した生き物のシルエットが刻まれている。生きた聖遺物箱。\n\n鎖は緩い。いつでも去れる。去らない。",
+   latin:"VINCIT OMNIA — ET VINCITUR A SE",latinJp:"全てに勝つ——そして自分自身に敗れる。",
+   upright:"何に縛られているか、まず見ろ。",
+   reversed:"縄に気づいていない。あるいは気づきたくない。"},
+  {id:16,name:"塔",nameEn:"THE TOWER",roman:"ⅩⅥ",
+   creature:"BONE TOWER",
+   image:"https://assets.st-note.com/img/1779940995-bI4N2gKOdcSGzmBZPaMEQq6o.png",
+   desc:"骨で作られた塔。大腿骨、脊椎、頭蓋骨、肋骨——全て荷重を支える構造として組み合わされている。165万年かけて積み上げられた。\n\n頂点に、プテロサウルスの骨格。翼を広げ、固定されている。文明の風見鶏。\n\n一本の対角線が、カードを斜めに走る。隕石の光——衝突の数ミリ秒前、光だけが先に届く。\n\n炎なし。爆発なし。ただ一本の緑の線と、散り始めた三つの骨。",
+   latin:"TURRIS CADIT — NEMO AUDIT",latinJp:"塔は落ちる——誰も聞こえない。",
+   upright:"崩壊は解放だ。しがみつくな。",
+   reversed:"崩れるべきものが、まだ崩れていない。"},
+  {id:17,name:"星",nameEn:"THE STAR",roman:"ⅩⅦ",
+   creature:"ARCHAEOPTERYX",
+   image:"https://assets.st-note.com/img/1779941083-513kzZGDtOY4XCKUyxQBRevF.png",
+   desc:"枯れた枝に、一羽が止まっている。枝に木はない。木はもう消えた。でも枝は、ある。だから止まっている。\n\n左翼の先端から、羽毛が星になって散っていく。生物と宇宙の境界が、このカードで初めて、静かに溶けた。\n\n右足に、骨の器。そこから緑の光が、虚空へ注がれる。\n\nこの生き物は、自分の未来を指している。知らないまま。",
+   latin:"TRANSIT — ET LUCET",latinJp:"越える——そして輝く。",
+   upright:"希望は消えていなかった。",
+   reversed:"星は出ているのに、下を向いている。"},
+  {id:18,name:"月",nameEn:"THE MOON",roman:"ⅩⅧ",
+   creature:"PTERODACTYLUS",
+   image:"https://assets.st-note.com/img/1779941162-f1KWYbpQy6DHwO2s9eIBimTk.png",
+   desc:"月が、カードの上半分を占める。近づいて見ると——月の表面全体が、頭蓋骨で覆われている。何百万年もの死で作られた天体。\n\n二本の大腿骨が門柱として立っている。その間の道を、翼竜が歩いている。翼を折って。地面を。行ったことがあるような気がする場所へ。\n\n足元に、ザリガニと初期哺乳類。どちらも月を見上げている。どちらも目が緑。",
+   latin:"MEMORIA FALLIT — LUX MANET",latinJp:"記憶は裏切る——光だけが残る。",
+   upright:"不安は道しるべだ。感じながら進め。",
+   reversed:"霧の中で完全に方向を失っている。"},
+  {id:19,name:"太陽",nameEn:"THE SUN",roman:"ⅩⅨ",
+   creature:"FIRST BIRD",
+   image:"https://assets.st-note.com/img/1779941245-O2PW8T1axjJorz3vetHluNsp.png",
+   desc:"一羽の鳥が、翼を広げて飛んでいる。アーケオプテリクスではない。その先にいる、もう恐竜ではないもの。\n\n真下に、ヴェロキラプトルの幽霊。同じポーズ。同じ翼の広がり。鳥は見ていない。知らないまま、飛び去っている。\n\n上には骨の太陽。大腿骨、肋骨、脊椎が光線として放射する。\n\n失われたものが、光源になった。",
+   latin:"VOLAT — NESCIT UNDE",latinJp:"飛ぶ——どこから来たかを知らずに。",
+   upright:"今は素直に喜んでいい。",
+   reversed:"光が眩しすぎて、目を閉じている。"},
+  {id:20,name:"審判",nameEn:"JUDGEMENT",roman:"ⅩⅩ",
+   creature:"K-Pg BOUNDARY",
+   image:"https://assets.st-note.com/img/1779941431-xMDj9QseFglVqLYSOmIArP4K.png",
+   desc:"恐竜がいない。人間の手がある——デッキで唯一。地質ハンマーを持った手が、右上から侵入してくる。\n\nカード全体が地層の断面だ。上から下へ：哺乳類・鳥・花、恐竜層、そしてカード中央を水平に走る純粋な酸グリーンの線——K-Pg境界。イリジウム層。隕石の名刺。6600万年、石の中で待っていた。\n\n境界線から、緑の幽霊が立ち上る。死者が裁かれるのではない。初めて、目撃される。",
+   latin:"SCRIPTUM EST — ET LEGITUR",latinJp:"書かれた——そして読まれる。",
+   upright:"呼び声が聞こえている。立ち上がれ。",
+   reversed:"呼ばれているのに、聞こえないふりをしている。"},
+  {id:21,name:"世界",nameEn:"THE WORLD",roman:"ⅩⅩⅠ",
+   creature:"CHICXULUB CRATER",
+   image:"https://assets.st-note.com/img/1779941494-CaxWnrQZhj05Y8R7VLwNzoPD.png",
+   desc:"宇宙から見た地球。中心に、チチュルブ・クレーター。同心円の緑の波紋として刻まれている。\n\n生命に覆われているが、消えていない。クレーターの中心に、極めて小さな恐竜のシルエット。両腕を上げている。小さすぎて、探さないと見えない。\n\n地球を囲む花冠は、化石でできている。21枚全てのシンボルが、一つの円になっている。\n\nこの距離から見ると、絶滅は見えない。",
+   latin:"FINIS — ET INITIUM",latinJp:"終わり——そして始まり。",
+   upright:"ひとつの旅が完成した。",
+   reversed:"終わりを認めず、まだ疾走している。"},
+];
+
+// ---- 背景：隕石の光跡 ----
+(function(){
+  const c=document.getElementById('bg');
+  const ctx=c.getContext('2d');
+  let W,H,meteors=[],particles=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+
+  function mkMeteor(){
+    return{
+      x:Math.random()*W*1.5,y:-20,
+      vx:-Math.random()*3-1,vy:Math.random()*2+1,
+      len:Math.random()*80+40,
+      opacity:Math.random()*.6+.2,
+      life:0,maxLife:Math.random()*80+60,
+      color:Math.random()<.5?'#ff0066':'#39ff14',
+    };
+  }
+  function mkParticle(){
+    const colors=['#ff006622','#39ff1422','#880033','#1a7a08'];
+    return{
+      x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()*1+.3,
+      a:Math.random()*Math.PI*2,
+      as:Math.random()*.004+.001,
+      color:colors[Math.floor(Math.random()*colors.length)],
+    };
+  }
+  for(let i=0;i<60;i++)particles.push(mkParticle());
+  let frameCount=0;
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // 背景
+    const g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#000000');g.addColorStop(.5,'#030001');g.addColorStop(1,'#000000');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+    // 浮遊粒子
+    particles.forEach(p=>{
+      p.a+=p.as;
+      const op=(Math.sin(p.a)+1)/2*.4+.05;
+      ctx.globalAlpha=op;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color;ctx.fill();
+    });
+    ctx.globalAlpha=1;
+
+    // 隕石
+    frameCount++;
+    if(frameCount%120===0)meteors.push(mkMeteor());
+    meteors=meteors.filter(m=>{
+      m.life++;m.x+=m.vx;m.y+=m.vy;
+      const progress=m.life/m.maxLife;
+      const op=m.opacity*(1-progress);
+      const tail=m.len*(1-progress*.5);
+      ctx.beginPath();
+      ctx.moveTo(m.x,m.y);
+      ctx.lineTo(m.x-m.vx/Math.hypot(m.vx,m.vy)*tail,m.y-m.vy/Math.hypot(m.vx,m.vy)*tail);
+      ctx.strokeStyle=m.color;ctx.globalAlpha=op;ctx.lineWidth=1.5;ctx.stroke();
+      ctx.globalAlpha=1;
+      return m.life<m.maxLife;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ---- ナビ ----
+const pages={home:document.getElementById('page-home'),oracle:document.getElementById('page-oracle'),gallery:document.getElementById('page-gallery')};
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    Object.values(pages).forEach(p=>{p.classList.remove('show');p.style.display='none';});
+    const p=pages[btn.dataset.page];p.style.display='block';
+    setTimeout(()=>p.classList.add('show'),10);
+  });
+});
+document.getElementById('btn-start').addEventListener('click',()=>document.querySelector('[data-page="oracle"]').click());
+
+// ---- ギャラリー ----
+const grid=document.getElementById('gallery-grid');
+CARDS.forEach(card=>{
+  const el=document.createElement('div');el.className='g-card';
+  el.innerHTML=`<div class="g-img"><img src="${card.image}" alt="${card.name}" loading="lazy"><div class="g-img-ov"><div class="g-roman">${card.roman}</div></div></div><div class="g-text"><div class="g-name">${card.name}</div><div class="g-en">${card.nameEn}</div></div>`;
+  el.addEventListener('click',()=>openModal(card,false));
+  grid.appendChild(el);
+});
+
+// ---- オラクル ----
+let drawing=false,history=[];
+document.getElementById('draw-btn').addEventListener('click',()=>{
+  if(drawing)return;drawing=true;
+  const lbl=document.getElementById('draw-label');
+  lbl.textContent='...';lbl.classList.add('drawing');
+  setTimeout(()=>{
+    const card=CARDS[Math.floor(Math.random()*CARDS.length)];
+    const rev=Math.random()<.35;
+    history.unshift({card,rev,time:new Date()});
+    if(history.length>10)history.pop();
+    renderHistory();openModal(card,rev);
+    lbl.textContent='DRAW';lbl.classList.remove('drawing');drawing=false;
+  },900);
+});
+
+function renderHistory(){
+  const list=document.getElementById('history-list');
+  const sec=document.getElementById('history-section');
+  if(!history.length){sec.style.display='none';return;}
+  sec.style.display='block';list.innerHTML='';
+  history.forEach((h,i)=>{
+    const el=document.createElement('div');
+    el.className='history-item'+(i===0?' latest':'');
+    const t=h.time.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});
+    el.innerHTML=`<img class="h-thumb${h.rev?' rev':''}" src="${h.card.image}" alt=""><div><div class="h-name">${h.card.name}</div><div class="h-pos ${h.rev?'rv':'up'}">${h.rev?'REVERSED':'UPRIGHT'}</div></div><div class="h-time">${t}</div>`;
+    el.addEventListener('click',()=>openModal(h.card,h.rev));
+    list.appendChild(el);
+  });
+}
+
+// ---- モーダル ----
+let typeTimer=null;
+function openModal(card,reversed){
+  const ov=document.getElementById('modal-ov');
+  if(typeTimer)clearInterval(typeTimer);
+  const img=document.getElementById('m-img');
+  img.className='modal-img';
+  document.getElementById('m-desc').innerHTML='';
+  document.getElementById('m-latin').classList.remove('show');
+  const oracle=document.getElementById('m-oracle');
+  oracle.classList.remove('show');oracle.className='modal-oracle';
+
+  img.src=card.image;
+  document.getElementById('m-roman').textContent=card.roman;
+  document.getElementById('m-creature').textContent=card.creature;
+  document.getElementById('m-name-ja').textContent='——'+card.name;
+  document.getElementById('m-name-en').textContent=card.nameEn;
+  const badge=document.getElementById('m-rev-badge');
+  badge.style.display=reversed?'block':'none';
+
+  ov.classList.add('show');document.body.style.overflow='hidden';
+
+  setTimeout(()=>{img.className='modal-img show'+(reversed?' rev':'');},250);
+
+  const desc=document.getElementById('m-desc');
+  setTimeout(()=>{
+    const text=card.desc;let i=0;
+    typeTimer=setInterval(()=>{
+      i++;
+      desc.innerHTML=text.slice(0,i).replace(/\n/g,'<br>')+(i<text.length?'<span class="cursor">▌</span>':'');
+      if(i>=text.length){
+        clearInterval(typeTimer);
+        setTimeout(()=>{
+          // ラテン語
+          const latin=document.getElementById('m-latin');
+          document.getElementById('m-latin-text').textContent=card.latin;
+          document.getElementById('m-latin-jp').textContent=card.latinJp;
+          latin.classList.add('show');
+          // オラクル
+          setTimeout(()=>{
+            oracle.className='modal-oracle show '+(reversed?'rv':'up');
+            document.getElementById('m-o-label').textContent=reversed?'REVERSED':'UPRIGHT';
+            const oStr=reversed?card.reversed:card.upright;
+            const oText=document.getElementById('m-o-text');oText.textContent='';
+            let k=0;
+            typeTimer=setInterval(()=>{k++;oText.textContent=oStr.slice(0,k);if(k>=oStr.length)clearInterval(typeTimer);},40);
+          },500);
+        },400);
+      }
+    },22);
+  },950);
+}
+
+function closeModal(){
+  if(typeTimer)clearInterval(typeTimer);
+  document.getElementById('modal-ov').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.getElementById('m-close').addEventListener('click',closeModal);
+document.getElementById('modal-ov').addEventListener('click',e=>{if(e.target===document.getElementById('modal-ov'))closeModal();});
+</script>
+</body>
+</html>
