@@ -255,6 +255,38 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
   background:repeating-linear-gradient(0deg,transparent,transparent 4px,#ff006603 4px,#ff006603 5px);
 }
 
+/* ======== スプラッシュ ======== */
+#splash{
+  position:fixed;inset:0;z-index:999;
+  background:#000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;
+  transition:opacity .8s ease;
+}
+#splash.fade{opacity:0;pointer-events:none;}
+#splash.gone{display:none;}
+.splash-line{
+  font-family:'Cinzel',serif;font-weight:700;
+  font-size:clamp(18px,6vw,34px);
+  letter-spacing:6px;
+  color:var(--magenta);
+  text-shadow:0 0 40px var(--magenta-glow),0 0 80px var(--magenta-glow);
+  opacity:0;animation:splash-in .5s ease forwards;
+  line-height:1.4;
+}
+.splash-line:nth-child(1){animation-delay:.15s;}
+.splash-line:nth-child(2){animation-delay:.35s;}
+.splash-line:nth-child(3){animation-delay:.55s;}
+.splash-sub{
+  font-family:'Cinzel',serif;
+  font-size:clamp(8px,2.5vw,11px);
+  color:var(--acid-dim);letter-spacing:8px;
+  margin-top:16px;
+  opacity:0;animation:splash-in .5s ease forwards;
+  animation-delay:.75s;
+}
+@keyframes splash-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
 /* 戻るボタン：押せると分かるデザイン */
 .modal-back{
   display:flex;align-items:center;gap:10px;
@@ -310,31 +342,35 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
 }
 .modal-name-wrap{
   text-align:center;
-  background:rgba(0,0,0,0.82);
-  padding:14px 16px 16px;
+  background:rgba(0,0,0,0.85);
+  padding:10px 16px 14px;
   border-bottom:1px solid #1a0008;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
-/* ローマ数字を画像から名前エリアに移動表示用 */
 .modal-name-roman{
-  font-family:'Cinzel',serif;font-size:13px;
-  color:var(--magenta);letter-spacing:6px;
-  text-shadow:0 0 12px var(--magenta-glow);
-  margin-bottom:6px;
-}
-.modal-creature{
-  font-family:'Cinzel',serif;font-size:11px;color:var(--text-dim);
-  letter-spacing:3px;margin-bottom:8px;
+  font-family:'Cinzel',serif;font-size:14px;
+  color:var(--magenta);letter-spacing:8px;
+  text-shadow:0 0 16px var(--magenta),0 0 32px var(--magenta-glow),0 2px 6px #000;
+  margin-bottom:4px;
 }
 .modal-name-ja{
-  font-size:22px;color:var(--magenta);letter-spacing:4px;margin-bottom:6px;
-  text-shadow:0 0 20px var(--magenta-glow),0 2px 4px #000;
-  font-weight:600;
+  font-size:24px;color:var(--magenta);letter-spacing:4px;margin-bottom:4px;
+  text-shadow:0 0 24px var(--magenta),0 0 48px var(--magenta-glow),0 2px 6px #000;
+  font-weight:700;
+}
+/* 学名：英語＋日本語補足 */
+.modal-creature{
+  font-family:'Cinzel',serif;font-size:10px;color:#550018;
+  letter-spacing:2px;margin-bottom:2px;
+}
+.modal-creature-jp{
+  font-size:11px;color:#3a0010;
+  letter-spacing:1px;margin-bottom:8px;
 }
 .modal-name-en{
-  font-family:'Cinzel',serif;font-size:13px;
+  font-family:'Cinzel',serif;font-size:14px;
   color:var(--text);letter-spacing:4px;
-  text-shadow:0 0 10px var(--magenta-glow),0 1px 3px #000;
+  text-shadow:0 0 14px var(--magenta-glow),0 0 28px var(--magenta-glow),0 1px 4px #000;
 }
 /* 本文：薄黒パネル＋明るめマゼンタ */
 .modal-desc-wrap{
@@ -402,6 +438,12 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
 </style>
 </head>
 <body>
+<div id="splash">
+  <div class="splash-line">BLACK MASS</div>
+  <div class="splash-line">EXTINCTION</div>
+  <div class="splash-line">TAROT</div>
+  <div class="splash-sub">絶滅という名の聖典</div>
+</div>
 <canvas id="bg"></canvas>
 <div id="app">
   <header>
@@ -498,6 +540,7 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
         <div class="modal-name-roman" id="m-name-roman"></div>
         <div class="modal-name-ja" id="m-name-ja"></div>
         <div class="modal-creature" id="m-creature"></div>
+        <div class="modal-creature-jp" id="m-creature-jp"></div>
         <div class="modal-name-en" id="m-name-en"></div>
       </div>
       <div class="modal-desc-wrap">
@@ -523,154 +566,154 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
 <script>
 const CARDS = [
   {id:0,name:"愚者",nameEn:"THE FOOL",roman:"0",
-   creature:"VELOCIRAPTOR",
+   creature:"VELOCIRAPTOR",creatureJp:"ヴェロキラプトル",
    image:"https://assets.st-note.com/img/1779934743-G6L09N5zKTvsMepkqcIOXbSx.png",
    desc:"岩の上に立ち、上を見ている。\n\n首には鍵と、小さなお守り。足元には割れた卵と、髑髏。\n\n隕石は来る。でもまだ来ていない。だから今は、ただ空を見ている。\n\nこれがすべての始まりだ。知らないことが、最初の一歩になる。",
    latin:"NESCIT — ET AMBULAT",latinJp:"知らない——そして歩く。",
    upright:"まだ何も決まっていない。それが最大の自由だ。",
    reversed:"空を見上げたまま、一歩が出ていない。"},
   {id:1,name:"魔術師",nameEn:"THE MAGICIAN",roman:"Ⅰ",
-   creature:"PTERANODON",
+   creature:"PTERANODON",creatureJp:"プテラノドン",
    image:"https://assets.st-note.com/img/1779934822-pMB8lIxDQPsftUHJ3GOzmKVr.png",
    desc:"翼を広げ、一方を空へ、一方を深淵へ。\n\n「上にあるごとく、下にあり」——錬金術の根本命題を、翼そのもので体現する。首には錬金術の三元素が連なる。硫黄、水銀、塩。\n\nこれは魔法ではない。消える直前、すべての知性が行う最後の儀式だ。",
    latin:"FIAT LUX — ET FACTA EST EXTINCTIO",latinJp:"光あれ——そして絶滅があった。",
    upright:"すでに道具はある。あとは意志だけだ。",
    reversed:"儀式を始める前に、止まっている。"},
   {id:2,name:"女教皇",nameEn:"THE HIGH PRIESTESS",roman:"Ⅱ",
-   creature:"MOSASAURUS",
+   creature:"MOSASAURUS",creatureJp:"モササウルス",
    image:"https://assets.st-note.com/img/1779934895-IEOneo9kMy0F6s41tc3fmGWU.png",
    desc:"深海から垂直に浮上する。目は閉じている。狩りをしているのではない。\n\n頭上には三日月冠。両脇には楔形文字の刻まれた柱。足元には水面に漂う巻物——その文字は、水に溶けている。\n\n海は図書館だった。この生き物は、その最後の司書だ。",
    latin:"ABYSSUS ABYSSUM INVOCAT",latinJp:"深淵は深淵を呼ぶ。",
    upright:"答えはすでにある。静かに受け取れ。",
    reversed:"知っていて、語らない。"},
   {id:3,name:"女帝",nameEn:"THE EMPRESS",roman:"Ⅲ",
-   creature:"BRACHIOSAURUS",
+   creature:"BRACHIOSAURUS",creatureJp:"ブラキオサウルス",
    image:"https://assets.st-note.com/img/1779939745-wGvxr2uQok1LYFCgzZ3fUmH8.png",
    desc:"首が、緩やかに左へ曲がる。枯れかけた木のように。攻撃でも、採食でもない。ただ、耐えている。\n\n足元には割れた卵。ひとつだけ、内側から淡く緑に光る卵がある。その光が、このカードで唯一の温もりだ。\n\n地球上を歩いた最大の生き物が、宇宙の虚空の前で、小さく見える。",
    latin:"FECUNDA TERRA MORITUR",latinJp:"肥沃な大地は、死ぬ。",
    upright:"豊かさはすでにここにある。",
    reversed:"与えることを恐れている。"},
   {id:4,name:"皇帝",nameEn:"THE EMPEROR",roman:"Ⅳ",
-   creature:"TRICERATOPS",
+   creature:"TRICERATOPS",creatureJp:"トリケラトプス",
    image:"https://assets.st-note.com/img/1779939823-pLdyehEKFg6s0kB3tUxWnjaH.png",
    desc:"正面を向いている。動かない。\n\nフリルには錬金術のグリフが刻まれている。三本の角は、三本の剣だ。体そのものが、城壁だ。\n\nこの生き物は玉座に座っているのではない。自分が玉座なのだ。\n\n左に骨。右に落ちた王冠。それだけが、王国がもう終わっていることを語る。",
    latin:"IMPERIUM TRANSIT — SAXUM MANET",latinJp:"帝国は過ぎ去る。石は残る。",
    upright:"秩序を作れ。あなたがその中心だ。",
    reversed:"玉座に座ったまま、王国が消えている。"},
   {id:5,name:"法皇",nameEn:"THE HIEROPHANT",roman:"Ⅴ",
-   creature:"ANKYLOSAURUS",
+   creature:"ANKYLOSAURUS",creatureJp:"アンキロサウルス",
    image:"https://assets.st-note.com/img/1779939914-I5mXDvxeTN7UCogEpQ3R4rP2.png",
    desc:"横向きに、待っている。ずっと待っている。\n\n甲羅の各プレートには、異なる錬金術シンボルが刻まれている。生きた石碑。歩く法典。\n\n尾のクラブは地面に置かれている。振り上げていない。もう、振り上げる必要がなくなって、久しい。\n\n伝統は、最後の信者が去った後も続いていた。",
    latin:"LEX AETERNA — NEMO MEMINIT",latinJp:"永遠の法——誰も覚えていない。",
    upright:"伝統の中に道がある。",
    reversed:"形だけが残り、意味が抜けている。"},
   {id:6,name:"恋人",nameEn:"THE LOVERS",roman:"Ⅵ",
-   creature:"IGUANODON",
+   creature:"IGUANODON",creatureJp:"イグアノドン",
    image:"https://assets.st-note.com/img/1779939998-KJQdbLN2uMcOhlRBs4nDofPt.png",
    desc:"二頭が向かい合っている。触れていない。届かない。\n\nその間を、緑の隕石が通過する。二頭は見ていない。お互いだけを見ている。\n\n足元には、ひとつの割れた卵。宇宙は証人として、ただそこにいる。介入しない。悼まない。慈悲もない。",
    latin:"AMOR VINCIT — SED NON MORTEM",latinJp:"愛は勝つ——ただし、死には勝てない。",
    upright:"選ぶことが、始まりだ。",
    reversed:"触れられずに、向かい合っている。"},
   {id:7,name:"戦車",nameEn:"THE CHARIOT",roman:"Ⅶ",
-   creature:"PACHYCEPHALOSAURUS",
+   creature:"PACHYCEPHALOSAURUS",creatureJp:"パキケファロサウルス",
    image:"https://assets.st-note.com/img/1779940045-4cLm6fMIghA7TPZaKybz9Bpw.png",
    desc:"正面から突進してくる。頭蓋のドームに、緑の征服のシジルが刻まれている。\n\n背後の地面には放射状の亀裂。破壊は後ろにある。前にはない。\n\n足元には、半分埋もれた古い車輪。生き物が、車輪そのものになった。\n\n目的地が消えた後も、疾走は続く。それが最も孤独な勝利だ。",
    latin:"CURRUS SINE VIA — VIS SINE FINE",latinJp:"道なき戦車——終わりなき力。",
    upright:"今は走れ。考えるのは後でいい。",
    reversed:"速さだけが先行し、方向を見失っている。"},
   {id:8,name:"力",nameEn:"STRENGTH",roman:"Ⅷ",
-   creature:"TYRANNOSAURUS REX",
+   creature:"TYRANNOSAURUS REX",creatureJp:"ティラノサウルス・レックス",
    image:"https://assets.st-note.com/img/1779940117-ultZUAjiBnxeYLJfHE0GKcpV.png",
    desc:"横向きに、静止している。生涯で初めて、静止している。\n\n首の付け根に、茨の冠。足元は灰。右下には、かつての獲物の顎骨——捕食者が無意味になった証拠が、足元に埋もれている。\n\n小さな腕が、少し前に出ている。祈りに近い。でも祈りではない。\n\n太陽は小さく、高く、遠い。すでに遠ざかりつつある。",
    latin:"FORTISSIMUS — ET PRIMUS CADIT",latinJp:"最強——そして最初に倒れる。",
    upright:"力は静けさの中にある。",
    reversed:"頂点にいるが、灰が見えていない。"},
   {id:9,name:"隠者",nameEn:"THE HERMIT",roman:"Ⅸ",
-   creature:"EDMONTOSAURUS",
+   creature:"EDMONTOSAURUS",creatureJp:"エドモントサウルス",
    image:"https://assets.st-note.com/img/1779940460-Spq3O8LUAYmCg0ftFo5knWR4.png",
    desc:"岩の上に立っている。岩は宙に浮いている。世界の下はすでに消えた。\n\n前足に、一本の骨。骨は内側から緑に光っている。化石の光。記憶の光。\n\n右上に、ひとつの星。最後の星か、最初の隕石か。\n\n誰も見ていない。でも見ている。それだけで、十分だった。",
    latin:"SOLUS VIDET — SOLUS MORITUR",latinJp:"ひとりで見る——ひとりで死ぬ。",
    upright:"自分の光で照らせる範囲を歩け。",
    reversed:"光を消して、立ち止まっている。"},
   {id:10,name:"運命の輪",nameEn:"WHEEL OF FORTUNE",roman:"Ⅹ",
-   creature:"AMMONITE",
+   creature:"AMMONITE",creatureJp:"アンモナイト",
    image:"https://assets.st-note.com/img/1779940521-0Dt8iRlgvVdu2OBIT7ZFaC4Q.png",
    desc:"このカードだけ、恐竜がいない。\n\nアンモナイトの螺旋が、輪そのものだ。各チャンバーには、それぞれの時代が刻まれている。外側から内側へ：灰、哺乳類、恐竜、古生代の生物、そして中心——純粋な緑の虚空。\n\n上には、複数の化石骨格で組み上げられたスフィンクス。緑の目だけが生きている。\n\n左で蛇が降り、右で蛇が昇る。同じ蛇だ。",
    latin:"ROTA GIRAT — NEMO REDIT",latinJp:"輪は回る——誰も戻らない。",
    upright:"流れに乗れ。今は上昇の番だ。",
    reversed:"輪に飲まれ、回されている。"},
   {id:11,name:"正義",nameEn:"JUSTICE",roman:"Ⅺ",
-   creature:"STEGOSAURUS",
+   creature:"STEGOSAURUS",creatureJp:"ステゴサウルス",
    image:"https://assets.st-note.com/img/1779940582-pStOdk8hyGW9ugwMIf2RnNoT.png",
    desc:"横向きに、動かない。ジュラ紀からずっと、ここに立っている。\n\n背板は天秤になっている。各プレートから鎖が垂れ、実際の皿がぶら下がっている。それぞれに、錬金術の計量シンボルが刻まれている。\n\n口から、緑の炎が一滴。判決の配達。\n\n地面を、水平な亀裂が走る。左：生きたシダ。右：灰。この一本の線が、前と後の境界だ。",
    latin:"AEQUUM EST — ERGO TRANSIT",latinJp:"均衡している——ゆえに過ぎ去る。",
    upright:"正直に向き合え。答えはすでに出ている。",
    reversed:"天秤が傾いたまま、目を逸らしている。"},
   {id:12,name:"吊られた男",nameEn:"THE HANGED MAN",roman:"Ⅻ",
-   creature:"ELASMOSAURUS",
+   creature:"ELASMOSAURUS",creatureJp:"エラスモサウルス",
    image:"https://assets.st-note.com/img/1779940651-TFa2SRjDg8WUqVzmcJXEfQNr.png",
    desc:"首が、ゆっくりとS字を描いて垂れ下がる。上の枯れた珊瑚の根に、海百合の花輪が巻かれた後足が引っかかっている。\n\n鎖ではなく、花。これは選んだことだ。\n\n頭部から、緑の粒子が散る。最後の呼気が、光になる。\n\nこの生き物と虚空は、ある了解に達した。",
    latin:"PENDET — ET VIDET QUOD ALII NON VIDENT",latinJp:"吊るされている——そして他の者には見えないものを見る。",
    upright:"今は動かないことが正解だ。",
    reversed:"吊るされたまま、気づこうとしていない。"},
   {id:13,name:"死神",nameEn:"DEATH",roman:"ⅩⅢ",
-   creature:"SPINOSAURUS",
+   creature:"SPINOSAURUS",creatureJp:"スピノサウルス",
    image:"https://assets.st-note.com/img/1779940721-sB4QqFM1HNtJWjPnOwprLdUm.png",
    desc:"川がない。でもスピノサウルスは、川があった場所に立っている。\n\n頭を、魚がいた方向に傾けている。乾いた川底のひびわれが、魚の骨格の輪郭を形成している。川の記憶が、大地に刻まれている。\n\nセイルの隙間から、宇宙が透けて見える。\n\n足元に、一輪の緑の蓮。乾いた地面に咲いている。",
    latin:"NONDUM SCIT — IAM TRANSIIT",latinJp:"まだ知らない——すでに通過した。",
    upright:"終わりは変容だ。恐れるな。",
    reversed:"変わることを拒み、川のない場所に立ち続けている。"},
   {id:14,name:"節制",nameEn:"TEMPERANCE",roman:"ⅩⅣ",
-   creature:"OVIRAPTOR",
+   creature:"OVIRAPTOR",creatureJp:"オヴィラプトル",
    image:"https://assets.st-note.com/img/1779940833-5Gx1vKNg6V3QtrUmi8HnhO94.png",
    desc:"羽毛を持つ、最も鳥に近い恐竜。巣の上で、翼を広げている。\n\n両前足に、くり抜かれた骨の器。高い方から低い方へ、細い緑の液体が流れている。それは水ではない。時間だ。\n\n器の下には卵。いくつかは孵化した。いくつかはしなかった。いくつかは、しない。\n\nオヴィラプトルは区別しない。全てを等しく、温める。",
    latin:"LENTE — SED MUTAT",latinJp:"ゆっくりと——しかし変わる。",
    upright:"バランスは動きの中にある。",
    reversed:"どちらかに注ぎすぎている。"},
   {id:15,name:"悪魔",nameEn:"THE DEVIL",roman:"ⅩⅤ",
-   creature:"DIMETRODON",
+   creature:"DIMETRODON",creatureJp:"ディメトロドン（恐竜以前の最古の生存者）",
    image:"https://assets.st-note.com/img/1779940925-rhczyo0Hqf9ZaJOD8kxQitgd.png",
    desc:"恐竜より古い。恐竜が経験しなかった大量絶滅を、すでに生き延びた。\n\n正面を向き、玉座の岩に座っている。両目が緑——このデッキで唯一。全てを見る。それが問題だ。\n\n背びれの各パネルに、自分より先に絶滅した生き物のシルエットが刻まれている。生きた聖遺物箱。\n\n鎖は緩い。いつでも去れる。去らない。",
    latin:"VINCIT OMNIA — ET VINCITUR A SE",latinJp:"全てに勝つ——そして自分自身に敗れる。",
    upright:"何に縛られているか、まず見ろ。",
    reversed:"縄に気づいていない。あるいは気づきたくない。"},
   {id:16,name:"塔",nameEn:"THE TOWER",roman:"ⅩⅥ",
-   creature:"BONE TOWER",
+   creature:"BONE TOWER",creatureJp:"骨の塔（恐竜骨格で組まれた建造物）",
    image:"https://assets.st-note.com/img/1779940995-bI4N2gKOdcSGzmBZPaMEQq6o.png",
    desc:"骨で作られた塔。大腿骨、脊椎、頭蓋骨、肋骨——全て荷重を支える構造として組み合わされている。165万年かけて積み上げられた。\n\n頂点に、プテロサウルスの骨格。翼を広げ、固定されている。文明の風見鶏。\n\n一本の対角線が、カードを斜めに走る。隕石の光——衝突の数ミリ秒前、光だけが先に届く。\n\n炎なし。爆発なし。ただ一本の緑の線と、散り始めた三つの骨。",
    latin:"TURRIS CADIT — NEMO AUDIT",latinJp:"塔は落ちる——誰も聞こえない。",
    upright:"崩壊は解放だ。しがみつくな。",
    reversed:"崩れるべきものが、まだ崩れていない。"},
   {id:17,name:"星",nameEn:"THE STAR",roman:"ⅩⅦ",
-   creature:"ARCHAEOPTERYX",
+   creature:"ARCHAEOPTERYX",creatureJp:"アーケオプテリクス（最古の鳥類）",
    image:"https://assets.st-note.com/img/1779941083-513kzZGDtOY4XCKUyxQBRevF.png",
    desc:"枯れた枝に、一羽が止まっている。枝に木はない。木はもう消えた。でも枝は、ある。だから止まっている。\n\n左翼の先端から、羽毛が星になって散っていく。生物と宇宙の境界が、このカードで初めて、静かに溶けた。\n\n右足に、骨の器。そこから緑の光が、虚空へ注がれる。\n\nこの生き物は、自分の未来を指している。知らないまま。",
    latin:"TRANSIT — ET LUCET",latinJp:"越える——そして輝く。",
    upright:"希望は消えていなかった。",
    reversed:"星は出ているのに、下を向いている。"},
   {id:18,name:"月",nameEn:"THE MOON",roman:"ⅩⅧ",
-   creature:"PTERODACTYLUS",
+   creature:"PTERODACTYLUS",creatureJp:"プテロダクティルス（翼竜）",
    image:"https://assets.st-note.com/img/1779941162-f1KWYbpQy6DHwO2s9eIBimTk.png",
    desc:"月が、カードの上半分を占める。近づいて見ると——月の表面全体が、頭蓋骨で覆われている。何百万年もの死で作られた天体。\n\n二本の大腿骨が門柱として立っている。その間の道を、翼竜が歩いている。翼を折って。地面を。行ったことがあるような気がする場所へ。\n\n足元に、ザリガニと初期哺乳類。どちらも月を見上げている。どちらも目が緑。",
    latin:"MEMORIA FALLIT — LUX MANET",latinJp:"記憶は裏切る——光だけが残る。",
    upright:"不安は道しるべだ。感じながら進め。",
    reversed:"霧の中で完全に方向を失っている。"},
   {id:19,name:"太陽",nameEn:"THE SUN",roman:"ⅩⅨ",
-   creature:"FIRST BIRD",
+   creature:"FIRST BIRD",creatureJp:"最初の鳥（恐竜から進化した現生鳥類の祖先）",
    image:"https://assets.st-note.com/img/1779941245-O2PW8T1axjJorz3vetHluNsp.png",
    desc:"一羽の鳥が、翼を広げて飛んでいる。アーケオプテリクスではない。その先にいる、もう恐竜ではないもの。\n\n真下に、ヴェロキラプトルの幽霊。同じポーズ。同じ翼の広がり。鳥は見ていない。知らないまま、飛び去っている。\n\n上には骨の太陽。大腿骨、肋骨、脊椎が光線として放射する。\n\n失われたものが、光源になった。",
    latin:"VOLAT — NESCIT UNDE",latinJp:"飛ぶ——どこから来たかを知らずに。",
    upright:"今は素直に喜んでいい。",
    reversed:"光が眩しすぎて、目を閉じている。"},
   {id:20,name:"審判",nameEn:"JUDGEMENT",roman:"ⅩⅩ",
-   creature:"K-Pg BOUNDARY",
+   creature:"K-Pg BOUNDARY",creatureJp:"K-Pg境界（白亜紀-古第三紀境界・イリジウム層）",
    image:"https://assets.st-note.com/img/1779941431-xMDj9QseFglVqLYSOmIArP4K.png",
    desc:"恐竜がいない。人間の手がある——デッキで唯一。地質ハンマーを持った手が、右上から侵入してくる。\n\nカード全体が地層の断面だ。上から下へ：哺乳類・鳥・花、恐竜層、そしてカード中央を水平に走る純粋な酸グリーンの線——K-Pg境界。イリジウム層。隕石の名刺。6600万年、石の中で待っていた。\n\n境界線から、緑の幽霊が立ち上る。死者が裁かれるのではない。初めて、目撃される。",
    latin:"SCRIPTUM EST — ET LEGITUR",latinJp:"書かれた——そして読まれる。",
    upright:"呼び声が聞こえている。立ち上がれ。",
    reversed:"呼ばれているのに、聞こえないふりをしている。"},
   {id:21,name:"世界",nameEn:"THE WORLD",roman:"ⅩⅩⅠ",
-   creature:"CHICXULUB CRATER",
+   creature:"CHICXULUB CRATER",creatureJp:"チクシュルーブ衝突孔（メキシコ・ユカタン半島）",
    image:"https://assets.st-note.com/img/1779941494-CaxWnrQZhj05Y8R7VLwNzoPD.png",
    desc:"宇宙から見た地球。中心に、チチュルブ・クレーター。同心円の緑の波紋として刻まれている。\n\n生命に覆われているが、消えていない。クレーターの中心に、極めて小さな恐竜のシルエット。両腕を上げている。小さすぎて、探さないと見えない。\n\n地球を囲む花冠は、化石でできている。21枚全てのシンボルが、一つの円になっている。\n\nこの距離から見ると、絶滅は見えない。",
    latin:"FINIS — ET INITIUM",latinJp:"終わり——そして始まり。",
@@ -744,6 +787,15 @@ const CARDS = [
   }
   draw();
 })();
+
+// ---- スプラッシュ ----
+window.addEventListener('load',()=>{
+  const splash=document.getElementById('splash');
+  setTimeout(()=>{
+    splash.classList.add('fade');
+    setTimeout(()=>splash.classList.add('gone'),900);
+  },1800);
+});
 
 // ---- ナビ ----
 const pages={home:document.getElementById('page-home'),oracle:document.getElementById('page-oracle'),gallery:document.getElementById('page-gallery')};
@@ -821,6 +873,7 @@ function openModal(card,reversed,fromOracleMode){
   document.getElementById('m-roman').textContent=card.roman;
   document.getElementById('m-name-roman').textContent=card.roman;
   document.getElementById('m-creature').textContent=card.creature;
+  document.getElementById('m-creature-jp').textContent=card.creatureJp||'';
   document.getElementById('m-name-ja').textContent=card.name;
   document.getElementById('m-name-en').textContent=card.nameEn;
   const badge=document.getElementById('m-rev-badge');
@@ -874,13 +927,42 @@ document.getElementById('m-back').addEventListener('click',()=>{
   document.querySelector('[data-page="gallery"]').click();
 });
 
-// カード間ナビ
+// カード間ナビ（ボタン）
 document.getElementById('m-prev').addEventListener('click',()=>{
   if(currentCardIndex>0) openModal(CARDS[currentCardIndex-1],false,false);
 });
 document.getElementById('m-next').addEventListener('click',()=>{
   if(currentCardIndex<CARDS.length-1) openModal(CARDS[currentCardIndex+1],false,false);
 });
+
+// スワイプ操作
+(function(){
+  const box=document.getElementById('modal-box');
+  let startX=0,startY=0,moved=false;
+  box.addEventListener('touchstart',e=>{
+    startX=e.touches[0].clientX;
+    startY=e.touches[0].clientY;
+    moved=false;
+  },{passive:true});
+  box.addEventListener('touchmove',e=>{
+    const dx=Math.abs(e.touches[0].clientX-startX);
+    const dy=Math.abs(e.touches[0].clientY-startY);
+    if(dx>dy&&dx>10)moved=true;
+  },{passive:true});
+  box.addEventListener('touchend',e=>{
+    if(!moved)return;
+    const dx=e.changedTouches[0].clientX-startX;
+    const dy=Math.abs(e.changedTouches[0].clientY-startY);
+    if(Math.abs(dx)<50||dy>60)return;
+    if(dx<0&&currentCardIndex<CARDS.length-1){
+      // 左スワイプ → 次
+      openModal(CARDS[currentCardIndex+1],false,false);
+    } else if(dx>0&&currentCardIndex>0){
+      // 右スワイプ → 前
+      openModal(CARDS[currentCardIndex-1],false,false);
+    }
+  },{passive:true});
+})();
 
 document.getElementById('m-close').addEventListener('click',closeModal);
 document.getElementById('modal-ov').addEventListener('click',e=>{if(e.target===document.getElementById('modal-ov'))closeModal();});
