@@ -22,7 +22,7 @@
   --acid-dim:#2aaa0e;
   --acid-glow:#39ff1433;
   --text:#ff3377;
-  --text-dim:#880033;
+  --text-dim:#b0124d;
   --border:#2a0010;
 }
 body{
@@ -57,7 +57,7 @@ header::before{
 
 .h-top{
   font-family:'Cinzel',serif;font-size:8px;letter-spacing:6px;
-  color:#440018;margin-bottom:10px;
+  color:#6b1737;margin-bottom:10px;
 }
 .h-title-main{
   font-family:'Cinzel',serif;font-weight:700;
@@ -74,7 +74,7 @@ header::before{
   color:var(--acid-dim);letter-spacing:4px;margin-bottom:6px;
 }
 .h-en{
-  font-family:'Cinzel',serif;font-size:9px;color:#2a0010;
+  font-family:'Cinzel',serif;font-size:9px;color:#5f1532;
   letter-spacing:4px;margin-bottom:22px;
 }
 
@@ -117,8 +117,10 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
   color:var(--magenta);margin-bottom:14px;
 }
 .home-rule-text{
-  font-size:15px;color:var(--text);line-height:2.6;letter-spacing:.5px;
+  font-size:15px;color:var(--text);line-height:2.05;letter-spacing:.5px;
 }
+.home-rule-text p{margin:0;}
+.home-rule-text p+p{margin-top:18px;}
 .home-rule-text em{color:var(--acid-dim);font-style:normal;}
 .home-colors{display:flex;gap:12px;justify-content:center;margin-bottom:28px;}
 .color-chip{
@@ -133,10 +135,10 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
   background:rgba(0,0,0,0.5);
 }
 .home-credit-label{
-  font-family:'Cinzel',serif;font-size:9px;color:#2a0010;
+  font-family:'Cinzel',serif;font-size:9px;color:#641836;
   letter-spacing:4px;margin-bottom:10px;
 }
-.home-credit-text{font-size:13px;color:#660022;line-height:2.4;}
+.home-credit-text{font-size:13px;color:#9a2852;line-height:2.25;}
 .home-btn{
   font-family:'Cinzel',serif;font-size:13px;letter-spacing:5px;
   color:var(--black);
@@ -204,7 +206,7 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
 /* ======== GALLERY ======== */
 #page-gallery{display:none;}
 #page-gallery.show{display:block;}
-.gallery-lead{font-size:10px;color:#330010;text-align:center;margin-bottom:20px;letter-spacing:5px;font-family:'Cinzel',serif;}
+.gallery-lead{font-size:10px;color:#6a1738;text-align:center;margin-bottom:20px;letter-spacing:5px;font-family:'Cinzel',serif;}
 .gallery-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(108px,1fr));
@@ -360,11 +362,11 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
 }
 /* 学名：英語＋日本語補足 */
 .modal-creature{
-  font-family:'Cinzel',serif;font-size:10px;color:#550018;
+  font-family:'Cinzel',serif;font-size:10px;color:#8b2349;
   letter-spacing:2px;margin-bottom:2px;
 }
 .modal-creature-jp{
-  font-size:11px;color:#3a0010;
+  font-size:11px;color:#6e1a39;
   letter-spacing:1px;margin-bottom:8px;
 }
 .modal-name-en{
@@ -421,11 +423,11 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
 .modal-nav-btn{
   flex:1;padding:14px 8px;
   font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;
-  color:var(--text-dim);background:rgba(0,0,0,0.6);
-  border:1px solid #1a0008;border-radius:1px;
+  color:#d21b63;background:rgba(0,0,0,0.6);
+  border:1px solid #5a0d2b;border-radius:1px;
   cursor:pointer;transition:all .2s;min-height:48px;
 }
-.modal-nav-btn:hover{border-color:var(--magenta-dim);color:var(--magenta);}
+.modal-nav-btn:hover{border-color:var(--magenta);color:var(--magenta);box-shadow:0 0 18px var(--magenta-glow);}
 
 .modal-close{
   display:block;width:100%;margin-top:12px;
@@ -435,6 +437,11 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
   cursor:pointer;transition:all .2s;min-height:48px;
 }
 .modal-close:hover{border-color:var(--magenta-dim);color:var(--magenta);}
+
+/* スマホでは詳細カードを少しだけ縮小し、解説へ早く届くようにする */
+@media (max-width:600px){
+  .modal-img-wrap{width:92%;padding-top:122.36%;margin:0 auto;}
+}
 </style>
 </head>
 <body>
@@ -467,22 +474,22 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
       <div class="home-rule">
         <div class="home-rule-title">RULES OF THIS DECK</div>
         <div class="home-rule-text">
-          このタロットには三つの色しかない。<br><br>
-          <em>ホットマゼンタ。</em><br>
+          <p>このタロットには三つの色しかない。</p>
+          <p><em>ホットマゼンタ。</em><br>
           <em>毒々しい酸グリーン。</em><br>
-          純粋な黒。<br><br>
-          そして一つの感情的ルールがある。<br><br>
-          「絶滅を直接描かない」<br><br>
-          代わりに描くのは、<br>
+          純粋な黒。</p>
+          <p>そして一つの感情的ルールがある。</p>
+          <p>「絶滅を直接描かない」</p>
+          <p>代わりに描くのは、<br>
           まだ誰も知らない時間。<br>
           でも宇宙はすでに知っている時間。<br>
-          その隙間だけを、21枚に刻んだ。
+          その隙間だけを、21枚に刻んだ。</p>
         </div>
       </div>
       <div class="home-colors">
         <div class="color-chip" style="background:#ff0066;color:#000;">MAGENTA</div>
         <div class="color-chip" style="background:#39ff14;color:#000;">ACID</div>
-        <div class="color-chip" style="background:#0a0004;color:#220008;border-color:#1a0008;">BLACK</div>
+        <div class="color-chip" style="background:#050002;color:#a12654;border-color:#6a1738;box-shadow:inset 0 0 0 1px #190008;">BLACK</div>
       </div>
       <div class="home-credit">
         <div class="home-credit-label">CREDIT</div>
