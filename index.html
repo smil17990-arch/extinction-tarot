@@ -297,7 +297,7 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
   color:var(--magenta);
   background:rgba(255,0,102,0.08);
   border:none;
-  border-bottom:1px solid var(--magenta-dim);
+  border-bottom:none;
   cursor:pointer;transition:all .25s;width:100%;
   min-height:52px;position:relative;z-index:2;
   box-shadow:inset 0 0 20px rgba(255,0,102,0.05);
@@ -349,12 +349,7 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
   border-bottom:1px solid #1a0008;
   margin-bottom:14px;
 }
-.modal-name-roman{
-  font-family:'Cinzel',serif;font-size:14px;
-  color:var(--magenta);letter-spacing:8px;
-  text-shadow:0 0 16px var(--magenta),0 0 32px var(--magenta-glow),0 2px 6px #000;
-  margin-bottom:4px;
-}
+
 .modal-name-ja{
   font-size:24px;color:var(--magenta);letter-spacing:4px;margin-bottom:4px;
   text-shadow:0 0 24px var(--magenta),0 0 48px var(--magenta-glow),0 2px 6px #000;
@@ -517,7 +512,7 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
           <p>代わりに描くのは、<br>
           まだ誰も知らない時間。<br>
           でも宇宙はすでに知っている時間。<br>
-          その隙間だけを、21枚に刻んだ。</p>
+          その隙間だけを、22枚に刻んだ。</p>
         </div>
       </div>
       <div class="home-colors">
@@ -911,7 +906,6 @@ function openModal(card,reversed,fromOracleMode){
 
   img.src=card.image;
   document.getElementById('m-roman').textContent=card.roman;
-  const nameRoman=document.getElementById('m-name-roman'); if(nameRoman) nameRoman.textContent=card.roman;
   document.getElementById('m-creature').textContent=card.creature;
   document.getElementById('m-creature-jp').textContent=card.creatureJp||'';
   document.getElementById('m-name-ja').textContent=card.name;
@@ -964,7 +958,7 @@ function closeModal(){
 // 戻るボタン：ギャラリーへ
 document.getElementById('m-back').addEventListener('click',()=>{
   closeModal();
-  document.querySelector('[data-page="gallery"]').click();
+  document.querySelector('[data-page="home"]').click();
 });
 
 // カード間ナビ（ボタン）
