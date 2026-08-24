@@ -442,6 +442,40 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
 @media (max-width:600px){
   .modal-img-wrap{width:92%;padding-top:122.36%;margin:0 auto;}
 }
+
+/* ======== FINAL MOBILE POLISH ======== */
+/* Gallery English titles: slightly brighter for legibility */
+.g-en{
+  color:#d21b63;
+}
+
+/* Active navigation: make current location unmistakable */
+.nav-btn.active{
+  color:#ff3377;
+  border-bottom-color:var(--magenta);
+  text-shadow:0 0 10px var(--magenta-glow);
+}
+
+/* Home/back symbol: restrained gothic UI rather than emoji */
+.modal-back-icon{
+  font-family:'Cinzel',serif;
+  font-size:20px;
+  color:var(--magenta);
+  text-shadow:0 0 10px var(--magenta-glow);
+}
+
+/* Smartphone header: preserve atmosphere while getting to the cards sooner */
+@media (max-width:600px){
+  header{padding:24px 12px 0;}
+  .h-top{margin-bottom:7px;}
+  .h-title-main{margin-bottom:4px;}
+  .h-title-sub{margin-bottom:4px;}
+  .h-en{margin-bottom:12px;}
+  .nav-btn{padding:8px 12px;min-height:40px;}
+  main{padding-top:18px;}
+  .gallery-lead{margin-bottom:16px;}
+}
+
 </style>
 </head>
 <body>
@@ -530,7 +564,7 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
 <div id="modal-ov">
   <div id="modal-box">
     <button class="modal-back" id="m-back">
-      <span class="modal-back-icon">🏠</span>
+      <span class="modal-back-icon">⌂</span>
       <span class="modal-back-text">
         <span class="modal-back-main">ホームへ戻る</span>
         <span class="modal-back-sub">RETURN TO THE ABYSS</span>
@@ -544,7 +578,6 @@ main{max-width:920px;margin:0 auto;padding:24px 16px;}
     </div>
     <div class="modal-body">
       <div class="modal-name-wrap">
-        <div class="modal-name-roman" id="m-name-roman"></div>
         <div class="modal-name-ja" id="m-name-ja"></div>
         <div class="modal-creature" id="m-creature"></div>
         <div class="modal-creature-jp" id="m-creature-jp"></div>
@@ -878,7 +911,7 @@ function openModal(card,reversed,fromOracleMode){
 
   img.src=card.image;
   document.getElementById('m-roman').textContent=card.roman;
-  document.getElementById('m-name-roman').textContent=card.roman;
+  const nameRoman=document.getElementById('m-name-roman'); if(nameRoman) nameRoman.textContent=card.roman;
   document.getElementById('m-creature').textContent=card.creature;
   document.getElementById('m-creature-jp').textContent=card.creatureJp||'';
   document.getElementById('m-name-ja').textContent=card.name;
